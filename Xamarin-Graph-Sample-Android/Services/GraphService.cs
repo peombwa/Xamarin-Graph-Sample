@@ -13,8 +13,8 @@ namespace Xamarin_Graph_Sample_Android.Services
 {
     public class GraphService
     {
-        public string clientID = "{YOUR_CLIENT_ID}"; // Rememeber to sepcify the clientID in your AndroidManifest.xml as well.
-        public string[] scopes = { "Files.ReadWrite.All" };
+        public string clientID = "{ENTER_YOUR_CLIENT_ID}"; // Rememeber to sepcify the clientID in your AndroidManifest.xml as well.
+        public string[] scopes = { "Files.Read.All" };
         public IPublicClientApplication AuthClientApp { get; private set; }
         public GraphServiceClient GraphClient { get; set; }
 
