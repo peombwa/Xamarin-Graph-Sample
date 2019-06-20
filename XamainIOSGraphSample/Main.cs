@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace Xamarin_Graph_Sample_iOS
+namespace XamainIOSGraphSample
 {
     public class Application
     {

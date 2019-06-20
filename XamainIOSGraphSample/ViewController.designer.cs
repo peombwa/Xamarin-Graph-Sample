@@ -9,7 +9,7 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace Xamarin_Graph_Sample_iOS
+namespace XamainIOSGraphSample
 {
     [Register ("ViewController")]
     partial class ViewController
