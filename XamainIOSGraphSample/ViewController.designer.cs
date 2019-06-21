@@ -14,6 +14,10 @@ namespace XamainIOSGraphSample
     [Register ("ViewController")]
     partial class ViewController
     {
+        [Action ("UIButton220_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void UIButton220_TouchUpInside (UIKit.UIButton sender);
+
         void ReleaseDesignerOutlets ()
         {
         }

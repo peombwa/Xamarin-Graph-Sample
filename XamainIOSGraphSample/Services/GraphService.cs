@@ -18,16 +18,13 @@ namespace XamainIOSGraphSample.Services
 
         public GraphService()
         {
-            // var authProvider = GetAuthProvider();
-            var authProvider = new DelegateAuthenticationProvider(async (request) =>
-            {
-                string accessToken = "YOUR_TOKEN";
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-            });
+            var authProvider = GetAuthProvider();
 
             // Use AndroidClientHandler as opposed to HttpClientHandler.
             var innerHandler = new NSUrlSessionHandler { AllowAutoRedirect = false };
-            var pipeline = GraphClientFactory.CreatePipeline(GraphClientFactory.CreateDefaultHandlers(authProvider), innerHandler);
+            var handlers = GraphClientFactory.CreateDefaultHandlers(authProvider);
+            //handlers.RemoveAt(1);
+            var pipeline = GraphClientFactory.CreatePipeline(handlers, innerHandler);
 
             GraphClient = new GraphServiceClient(authProvider, new HttpProvider(pipeline, true, new Serializer()));
         }
@@ -61,7 +58,7 @@ namespace XamainIOSGraphSample.Services
             try
             {
                 List<DriveItem> files = new List<DriveItem>();
-                var driveItems = await GraphClient.Me.Drive.Root.Children.Request().OrderBy("name desc").GetAsync().ConfigureAwait(false);
+                var driveItems = await GraphClient.Me.Drive.Root.Children.Request().OrderBy("name desc").Top(10).GetAsync();
                 return driveItems.Where(di => di.File != null).ToList();
             }
             catch (Exception ex)
@@ -75,7 +72,7 @@ namespace XamainIOSGraphSample.Services
         {
             try
             {
-                using (var stream = await GraphClient.Drives[item.ParentReference.DriveId].Items[item.Id].Content.Request().GetAsync().ConfigureAwait(false))
+                using (var stream = await GraphClient.Drives[item.ParentReference.DriveId].Items[item.Id].Content.Request().GetAsync())
                 using (var outputStream = new MemoryStream())
                 {
                     await stream.CopyToAsync(outputStream);
